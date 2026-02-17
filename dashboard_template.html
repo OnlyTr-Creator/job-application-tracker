@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application Tracker Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .stat-card h3 {
+            color: #666;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .subtitle {
+            color: #999;
+            font-size: 0.85em;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .chart-card h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .status-bar {
+            margin-bottom: 15px;
+        }
+
+        .status-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+
+        .status-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .status-count {
+            color: #666;
+        }
+
+        .progress-bar {
+            height: 25px;
+            background: #f0f0f0;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: white;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .action-items {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .action-items h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .action-item {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .action-item:hover {
+            background: #e9ecef;
+        }
+
+        .action-item.urgent {
+            border-left-color: #ff6b6b;
+            background: #fff5f5;
+        }
+
+        .action-item.urgent:hover {
+            background: #ffe5e5;
+        }
+
+        .action-item h4 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .action-item p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .applications-table {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+
+        .applications-table h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #667eea;
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #333;
+        }
+
+        tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            color: white;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 10px;
+        }
+
+        .metric-card h4 {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .metric-card .value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .empty-state svg {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            font-size: 1em;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .stat-card .value {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Job Application Tracker Dashboard</h1>
+            <p>Your job search analytics and insights</p>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="stats-grid" id="statsGrid">
+            <!-- Stats will be dynamically inserted here -->
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h2>📈 Status Breakdown</h2>
+                <div id="statusBreakdown">
+                    <!-- Status bars will be inserted here -->
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <h2>🎯 Success Metrics</h2>
+                <div id="successMetrics">
+                    <!-- Metrics will be inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Items -->
+        <div class="action-items" id="actionItems">
+            <h2>⚡ Action Items</h2>
+            <div id="actionItemsList">
+                <!-- Action items will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Applications Table -->
+        <div class="applications-table">
+            <h2>📋 Recent Applications</h2>
+            <div id="applicationsTable">
+                <!-- Table will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // This would be populated with actual data from the Python backend
+        // Example data structure:
+        const dashboardData = {
+            stats: {
+                total: 0,
+                active: 0,
+                interviews: 0,
+                offers: 0
+            },
+            statusBreakdown: {},
+            metrics: {
+                interview_rate: 0,
+                offer_rate: 0,
+                avg_days: 0
+            },
+            actionItems: [],
+            applications: []
+        };
+
+        function renderDashboard(data) {
+            renderStats(data.stats);
+            renderStatusBreakdown(data.statusBreakdown);
+            renderMetrics(data.metrics);
+            renderActionItems(data.actionItems);
+            renderApplicationsTable(data.applications);
+        }
+
+        function renderStats(stats) {
+            const statsGrid = document.getElementById('statsGrid');
+            statsGrid.innerHTML = `
+                <div class="stat-card">
+                    <h3>Total Applications</h3>
+                    <div class="value">${stats.total || 0}</div>
+                    <div class="subtitle">All time</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Active</h3>
+                    <div class="value">${stats.active || 0}</div>
+                    <div class="subtitle">In progress</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Interviews</h3>
+                    <div class="value">${stats.interviews || 0}</div>
+                    <div class="subtitle">Scheduled or completed</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Offers</h3>
+                    <div class="value">${stats.offers || 0}</div>
+                    <div class="subtitle">Received</div>
+                </div>
+            `;
+        }
+
+        function getStatusColor(status) {
+            const colors = {
+                'Applied': '#FFB84D',
+                'Phone Screen': '#4DA6FF',
+                'Interview Scheduled': '#6B8EFF',
+                'Interviewed': '#9D7EFF',
+                'Second Interview': '#B066FF',
+                'Offer Received': '#66FF99',
+                'Accepted': '#00CC66',
+                'Rejected': '#FF6B6B',
+                'Withdrawn': '#999999',
+                'Follow-up Needed': '#FFD93D'
+            };
+            return colors[status] || '#CCCCCC';
+        }
+
+        function renderStatusBreakdown(breakdown) {
+            const container = document.getElementById('statusBreakdown');
+            const total = Object.values(breakdown).reduce((a, b) => a + b, 0);
+
+            if (total === 0) {
+                container.innerHTML = '<div class="empty-state"><p>No applications yet</p></div>';
+                return;
+            }
+
+            let html = '';
+            for (const [status, count] of Object.entries(breakdown).sort((a, b) => b[1] - a[1])) {
+                const percentage = ((count / total) * 100).toFixed(1);
+                const color = getStatusColor(status);
+                html += `
+                    <div class="status-bar">
+                        <div class="status-label">
+                            <span class="status-name">${status}</span>
+                            <span class="status-count">${count} (${percentage}%)</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${percentage}%; background: ${color};">
+                                ${percentage}%
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+        }
+
+        function renderMetrics(metrics) {
+            const container = document.getElementById('successMetrics');
+            container.innerHTML = `
+                <div class="metric-card">
+                    <h4>Interview Rate</h4>
+                    <div class="value">${metrics.interview_rate || 0}%</div>
+                </div>
+                <div class="metric-card">
+                    <h4>Offer Rate</h4>
+                    <div class="value">${metrics.offer_rate || 0}%</div>
+                </div>
+                <div class="metric-card">
+                    <h4>Avg. Days Since Applied</h4>
+                    <div class="value">${metrics.avg_days || 0}</div>
+                </div>
+            `;
+        }
+
+        function renderActionItems(items) {
+            const container = document.getElementById('actionItemsList');
+            if (!items || items.length === 0) {
+                container.innerHTML = '<p style="color: #666;">No action items at the moment. Great job staying on top of things! 🎉</p>';
+                return;
+            }
+
+            let html = '';
+            items.forEach(item => {
+                const urgentClass = item.urgent ? 'urgent' : '';
+                html += `
+                    <div class="action-item ${urgentClass}">
+                        <h4>${item.title}</h4>
+                        <p>${item.description}</p>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderApplicationsTable(applications) {
+            const container = document.getElementById('applicationsTable');
+            if (!applications || applications.length === 0) {
+                container.innerHTML = '<div class="empty-state"><p>No applications tracked yet</p></div>';
+                return;
+            }
+
+            let html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Job Title</th>
+                            <th>Applied</th>
+                            <th>Status</th>
+                            <th>Days Since</th>
+                            <th>Next Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            applications.slice(0, 10).forEach(app => {
+                const statusColor = getStatusColor(app.status);
+                html += `
+                    <tr>
+                        <td><strong>${app.company}</strong></td>
+                        <td>${app.job_title}</td>
+                        <td>${app.app_date}</td>
+                        <td><span class="status-badge" style="background: ${statusColor};">${app.status}</span></td>
+                        <td>${app.days_since} days</td>
+                        <td>${app.next_action || '-'}</td>
+                    </tr>
+                `;
+            });
+
+            html += `
+                    </tbody>
+                </table>
+            `;
+            container.innerHTML = html;
+        }
+
+        // Initialize with sample data or empty state
+        renderDashboard(dashboardData);
+    </script>
+</body>
+</html>

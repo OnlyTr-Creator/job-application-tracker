@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application Tracker Pro - Land Your Dream Job Faster</title>
+    <meta name="description" content="AI-powered job application tracker with smart reminders, follow-up emails, and visual analytics. Stay organized and land your dream job faster!">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,165.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: #f8f9fa;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .stats-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-item p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            color: #333;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* Screenshot Section */
+        .screenshot {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .screenshot h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+        }
+
+        .screenshot-img {
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            background: white;
+            padding: 20px;
+        }
+
+        .screenshot-placeholder {
+            background: #f8f9fa;
+            padding: 100px;
+            border-radius: 10px;
+            color: #999;
+            font-size: 1.5rem;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 80px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .step p {
+            color: #666;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: #f8f9fa;
+            padding: 80px 20px;
+        }
+
+        .testimonial-grid {
+            max-width: 1200px;
+            margin: 40px auto 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .testimonial p {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .author-info h4 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: #999;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Pricing */
+        .pricing {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .pricing-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            border: 3px solid #667eea;
+            transform: scale(1.05);
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .price-period {
+            color: #999;
+            margin-bottom: 30px;
+        }
+
+        .features-list {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .features-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            color: #666;
+        }
+
+        .features-list li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* CTA Section */
+        .final-cta {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .final-cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .final-cta p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>📊 Land Your Dream Job Faster</h1>
+            <p>AI-powered job application tracking with smart reminders, follow-up emails, and visual analytics</p>
+            <a href="#get-started" class="cta-button">Get Started Free</a>
+            <a href="#features" class="cta-button secondary">Learn More</a>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>100%</h3>
+                <p>Free to Use</p>
+            </div>
+            <div class="stat-item">
+                <h3>AI</h3>
+                <p>Powered Assistance</p>
+            </div>
+            <div class="stat-item">
+                <h3>∞</h3>
+                <p>Unlimited Applications</p>
+            </div>
+            <div class="stat-item">
+                <h3>24/7</h3>
+                <p>Always Accessible</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h2 class="section-title">Why Job Seekers Love This Tool</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📝</div>
+                <h3>Smart Tracking</h3>
+                <p>Track every detail: company, role, dates, contacts, salary, and notes. Never lose track of an application again.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>AI Follow-up Emails</h3>
+                <p>Generate professional, personalized follow-up emails instantly. Tailored to your application status and timeline.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📅</div>
+                <h3>Calendar Integration</h3>
+                <p>Auto-create Google Calendar events for interviews with prep checklists. Never miss an interview or follow-up.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Visual Analytics</h3>
+                <p>See your success rates, interview conversion, and patterns. Make data-driven decisions to improve your job search.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💡</div>
+                <h3>Personalized Tips</h3>
+                <p>AI analyzes your data and provides specific suggestions to improve your application strategy and success rate.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Success Scoring</h3>
+                <p>Automatic success probability for each application. Focus your energy on the most promising opportunities.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshot Section -->
+    <section class="screenshot">
+        <h2>Beautiful, Intuitive Interface</h2>
+        <div class="screenshot-img">
+            <div class="screenshot-placeholder">
+                📊 Interactive Dashboard<br>
+                📈 Real-time Analytics<br>
+                🎨 Clean, Modern Design
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <h2 class="section-title">How It Works</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Add Applications</h3>
+                <p>Quick form to capture all relevant details. Takes less than 60 seconds per application.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Track Progress</h3>
+                <p>Update status as you move through the process. Automatic calculations and reminders.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Get AI Help</h3>
+                <p>Generate follow-up emails, get prep checklists, and receive personalized suggestions.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Land The Job</h3>
+                <p>Stay organized, follow up on time, and make data-driven decisions. Get more offers!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <h2 class="section-title">What Job Seekers Say</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial">
+                <p>"This tracker completely changed my job search. I went from chaotic spreadsheets to organized, data-driven applications. Landed 3 offers in 2 months!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">SM</div>
+                    <div class="author-info">
+                        <h4>Sarah Mitchell</h4>
+                        <p>Software Engineer</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial">
+                <p>"The AI follow-up emails saved me so much time. I used to stress about what to write. Now I just customize the generated email and send. Brilliant!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">JC</div>
+                    <div class="author-info">
+                        <h4>James Chen</h4>
+                        <p>Product Manager</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial">
+                <p>"The analytics showed me I was applying to the wrong roles. I adjusted my strategy and my interview rate went from 8% to 22%. Game changer!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">EP</div>
+                    <div class="author-info">
+                        <h4>Emily Parker</h4>
+                        <p>Marketing Specialist</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing" id="get-started">
+        <h2 class="section-title">Simple, Transparent Pricing</h2>
+        <div class="pricing-cards">
+            <div class="pricing-card">
+                <h3>Free</h3>
+                <div class="price">$0</div>
+                <p class="price-period">Forever</p>
+                <ul class="features-list">
+                    <li>Unlimited applications</li>
+                    <li>Basic tracking</li>
+                    <li>CSV export</li>
+                    <li>Visual dashboard</li>
+                    <li>Status management</li>
+                </ul>
+                <a href="#" class="cta-button">Start Free</a>
+            </div>
+
+            <div class="pricing-card featured">
+                <div class="badge">Most Popular</div>
+                <h3>Pro</h3>
+                <div class="price">$9</div>
+                <p class="price-period">per month</p>
+                <ul class="features-list">
+                    <li>Everything in Free</li>
+                    <li>AI follow-up emails</li>
+                    <li>Calendar integration</li>
+                    <li>Success scoring</li>
+                    <li>Personalized suggestions</li>
+                    <li>Interview prep checklists</li>
+                    <li>Priority support</li>
+                </ul>
+                <a href="#" class="cta-button">Start Pro Trial</a>
+            </div>
+
+            <div class="pricing-card">
+                <h3>Teams</h3>
+                <div class="price">$29</div>
+                <p class="price-period">per month</p>
+                <ul class="features-list">
+                    <li>Everything in Pro</li>
+                    <li>Multi-client management</li>
+                    <li>White-label branding</li>
+                    <li>Advanced reporting</li>
+                    <li>Team collaboration</li>
+                    <li>API access</li>
+                    <li>Dedicated support</li>
+                </ul>
+                <a href="#" class="cta-button secondary">Contact Sales</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <h2>Ready to Land Your Dream Job?</h2>
+        <p>Join thousands of job seekers who are staying organized and getting more offers</p>
+        <a href="#get-started" class="cta-button">Get Started Free - No Credit Card Required</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Job Application Tracker Pro | Built with ❤️ on <a href="https://creao.ai">CREAO Platform</a></p>
+        <p style="margin-top: 10px; opacity: 0.7;">AgentApp ID: 33SgDCUd1M</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        document.querySelectorAll('.feature-card, .step, .testimonial').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
