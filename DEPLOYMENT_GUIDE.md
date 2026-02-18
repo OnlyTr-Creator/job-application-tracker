@@ -382,6 +382,6 @@ Your Job Application Tracker is now deployable and shareable!
 
 ---
 
-**Built with ❤️ using Streamlit and Python**
+
 
 *Happy deploying! 🚀*

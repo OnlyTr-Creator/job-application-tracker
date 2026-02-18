@@ -404,6 +404,6 @@ You've got this! 💪
 
 ---
 
-**Built with ❤️ on CREAO Platform**
+
 
 *AgentApp ID: 33SgDCUd1M*

@@ -667,4 +667,3 @@ iterate, and grow.
 
 **Questions?** Open an issue on GitHub or DM me!
 
-*Built with ❤️ to help job seekers succeed*

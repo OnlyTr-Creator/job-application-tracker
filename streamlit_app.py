@@ -539,7 +539,7 @@ elif page == "⚙️ Settings":
     st.markdown("""
     **Job Application Tracker Pro** v1.0
 
-    Built with ❤️ using:
+    Built with using:
     - Streamlit for the web interface
     - Python for data management
     - AI for smart suggestions
